@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+</head>
+<style>
+</style>
+<body>
+<div class="body">
+    <button onclick="send1()">写日志</button>
+    <button onclick="send2()">同步获取消息</button>
+    <button onclick="send3()">异步获取消息</button>
+</div>
+<script>
+  const { ipcRenderer } = require('electron');
+
+  /**
+   * ipcRenderer.send用于处理同步逻辑，应用在写日志等
+   * ipcRenderer.on用于被动接收浏览器消息，应用在接收mq消息等
+   *
+   * ipcRenderer.invoke用于web主动发起并要接收消息，主要处理异步逻辑，也可以处理同步逻辑
+   *
+   */
+
+  function send1(){
+    ipcRenderer.send('send1','我是web日志啊啊啊');
+  }
+
+  function send2() {
+    ipcRenderer.send('send2', 'hello');
+  }
+  ipcRenderer.on('get_send2', (event, arg) => {
+    console.log('同步的浏览器消息', arg)
+  });
+
+  function send3(){
+    ipcRenderer.invoke('some-name', '111').then((res) => {
+      console.log('异步的浏览器消息---',res)
+    })
+  }
+
+
+</script>
+</body>
+</html>

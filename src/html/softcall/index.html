@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.4.1/socket.io.min.js"></script>
+<script>
+    const {
+        ipcRenderer
+    } = require('electron');
+
+    // const { io } = require('socket.io')
+
+    var globalData = {
+      setWinFlag: data => {
+        sessionStorage.setItem('wf', data);
+      },
+      getWinFlag: () => {
+        return sessionStorage.getItem('wf');
+      },
+    };
+
+    let flag = false;
+    let win_flag = globalData.getWinFlag() || false;
+
+    function ready() {
+        document.getElementById('dragarea').onclick=(e)=>{
+            console.log(e);
+        }
+
+        let node = document.getElementById('zoom')
+        node.onmouseout=()=>{
+            // console.log(globalData.getWinFlag(),win_flag);
+            if(win_flag){
+            ipcRenderer.send('zoomWindow', {
+                width: node.getBoundingClientRect().width,
+                height: node.getBoundingClientRect().height,
+                x: node.getBoundingClientRect().x,
+                y: node.getBoundingClientRect().y
+            })
+        }
+
+        // if(win_flag){
+        //     ipcRenderer.send('returnWindow', {
+        //     width: node.getBoundingClientRect().width,
+        //     height: node.getBoundingClientRect().height,
+        //     x: node.getBoundingClientRect().x,
+        //     y: node.getBoundingClientRect().y
+        // })
+        // }
+        }
+
+        var formTarget = function(e){
+            var e = e || window.event;
+            if(e.relatedTarget){return e.relatedTarget}else if(e.fromElement){return e.fromElement}
+            return null;
+        }
+        var toTarget = function(e){
+            var e = e || window.event;
+            if(e.relatedTarget){return e.relatedTarget}else if(e.toElement){return e.toElement}
+            return null;
+        } 
+
+        document.documentElement.onmouseenter=(e)=>{   
+        var _tar = formTarget(e);
+        // console.log('enter:',_tar).tagName;
+        // console.log(document.contains(_tar));
+        // console.log('enter!');
+            // ipcRenderer.send('enter')
+        // if(!_tar || document.contains(_tar)) return;
+        // console.log('enter');
+        }
+        document.documentElement.onmouseleave=(e)=>{
+            // console.log(e.toElement);
+            var _tar = toTarget(e);
+            // console.log('leave:',_tar.tagName);
+            // console.log(document.contains(_tar));
+
+            // if(!_tar) {
+            //     // console.log('leave!');
+                // ipcRenderer.send('leave')
+            // }
+            // if(!_tar || !document.contains(_tar)) console.log('leave!');
+            // console.log('leave!');
+        }
+
+        document.getElementsByTagName('section')[0].onmouseleave=(e)=>{
+            e.preventDefault()
+            e.stopPropagation();
+        }
+        var bts = document.getElementsByTagName('button');
+        for(let i of bts){
+            bts.onmouseleave=(e)=>{
+                e.preventDefault()
+                e.stopPropagation();
+            }
+        }
+    }
+
+    function func() {
+      ipcRenderer.send('returnWindow');
+      win_flag = false;
+      globalData.setWinFlag(false);
+    }
+
+    function func2() {
+      win_flag = false;
+      globalData.setWinFlag(false);
+      // if (e && e.stopPropagation) {
+      //     e.stopPropagation();
+      // } else {
+      //   window.event.cancelBubble = true;
+      // }
+
+      // let node = document.getElementById('zoom')
+      // // console.log(window.getComputedStyle(node, null).getPropertyValue("width"));
+      // ipcRenderer.send('zoomWindow', {
+      //     width: node.getBoundingClientRect().width,
+      //     height: node.getBoundingClientRect().height,
+      //     x: node.getBoundingClientRect().x,
+      //     y: node.getBoundingClientRect().y
+      // })
+
+      // ipcRenderer.send('createSuspensionMenu')
+    }
+
+    function func2_2() {
+      win_flag = true;
+      globalData.setWinFlag(true);
+      console.log(globalData.getWinFlag());
+      document.getElementById('bt3').style.color = 'yellow';
+
+      let node = document.getElementById('zoom');
+      ipcRenderer.send('zoomWindow', {
+        width: node.getBoundingClientRect().width,
+        height: node.getBoundingClientRect().height,
+        x: node.getBoundingClientRect().x, // 相对于浏览器的位置
+        y: node.getBoundingClientRect().y,
+      });
+    }
+
+    function func3() {
+      ipcRenderer.send('setWindow', {
+        width: 800,
+        height: flag ? 600 : 400,
+      });
+      flag = !flag;
+    }
+
+    function func4() {
+      ipcRenderer.send('close_broswer');
+    }
+
+    function func5() {
+      ipcRenderer.send('min_broswer');
+      setTimeout(() => {
+        ipcRenderer.send('restore_broswer');
+      }, 1500);
+    }
+
+    function func6() {
+        ipcRenderer.send('hide')
+    }
+
+    function funcWS() {
+        const socket = io("ws://127.0.0.1:3000")
+        socket.emit('mouse_position','连接成功!')
+        socket.on('connect',()=>{
+            console.log('con!!!');
+        })
+        socket.emit('send-msg','cyx!!!')
+        socket.on('broadcast',data=>{
+          console.log(data+1)
+        })
+    }
+
+    function funcWS2() {
+        const socket = io("ws://127.0.0.1:3000")
+        socket.on('connect',()=>{
+            console.log('con2!!!');
+        })
+        socket.on('broadcast',data=>{
+          console.log(data+2)
+        })
+    }
+
+    ipcRenderer.on('leave',()=>{
+        ipcRenderer.send('leave')
+    })
+    ipcRenderer.on('enter',()=>{
+        ipcRenderer.send('enter')
+    })
+
+
+    // const listen3=()=>{
+    //     ipcRenderer.send('re_absorb')
+    //     document.documentElement.removeEventListener('mouseleave',listen3)
+    // }
+
+    // const listen2=()=>{
+    //     // ipcRenderer.send('restore')
+    //     ipcRenderer.send('enter')
+    //     document.documentElement.removeEventListener('mouseleave',listen)
+    //     document.documentElement.removeEventListener('mouseenter',listen2)
+
+    //     // document.documentElement.addEventListener('mouseleave',listen3)
+    // }
+    // const listen=()=>{
+    //     ipcRenderer.send('leave')
+    //     document.documentElement.addEventListener('mouseenter',listen2)
+    // }
+
+    var absorbed = false;
+    ipcRenderer.on('absorb',(e,args)=>{
+        // console.log(document.body);
+        absorbed = true;
+        // document.documentElement.addEventListener('mouseleave',listen)
+    })
+
+    // document.documentElement.onmouseover=()=>{
+    //     console.log('over!');
+    // }
+    // document.documentElement.onmouseout=()=>{
+    //     console.log('out!');
+    // }
+
+     
+    
+    // document.addEventListener('mouseleave',()=>{ipcRenderer.send('leave')})
+    // document.addEventListener('mouseenter',()=>{ipcRenderer.send('enter')})
+
+    ipcRenderer.on('prevent_windowClose',(e,args)=>{
+        console.log('can not close!');
+    })
+</script>
+<style>
+    body,html{
+            /* -webkit-app-region: drag; */
+            
+        }
+        section{
+            /* margin-top: 30px; */
+            /* -webkit-app-region: no-drag; */
+        }
+    .my_body{
+        /* width:83px; */
+        /* height:83px; */
+    }
+    .bt2 {
+      height: 83px;
+      width: 83px;
+      margin: 0px;
+      /* top:10px;
+        left:200px;
+        position:absolute; */
+    }
+    .unit {
+      /* position: absolute;
+        top:100px;
+        left:10px; */
+    }
+    .dragarea{
+        height:20px;
+        background-color: aqua;
+        margin: -7px 0 20px -7px;
+        -webkit-app-region: drag;
+    }
+</style>
+<head>
+    <title>softcall</title>
+  </head>
+
+<body onload="ready()" onclick="">
+    <div class="dragarea" id="dragarea">拖拽区域</div>
+    <section id="sec">
+    <button class="unit" onclick="func()">返回窗口</button>
+    <button  onclick="func2()" id='zoom' class="bt2">变成悬浮窗</button>
+    <button class="unit" id="bt3" onclick="func2_2()">开启悬浮窗模式</button>
+    <button class="unit" onclick="func3()">折叠/展开窗口</button>
+    <button onclick="func4()">关闭窗口</button>
+    <button onclick="func5()">最小化</button>
+    <button onclick="func6()">隐藏窗口</button>
+    <button onclick="funcWS()">连接websocket</button>
+    <button onclick="funcWS2()">连接websocket2</button>
+    </section>
+  </body>
+</html>

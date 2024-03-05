@@ -1,0 +1,70 @@
+{
+  "name": "myBrowser",
+  "version": "1.0.0",
+  "description": "myBrowser",
+  "main": "main.js",
+  "scripts": {
+    "start": "chcp 65001 && electron .",
+    "dist": "electron-builder --win"
+  },
+  "author": "C.",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "18.3.15",
+    "electron-builder": "^24.9.1",
+    "electron-reloader": "1.2.3"
+  },
+  "build": {
+    "nsis": {
+      "oneClick": false,
+      "runAfterFinish": false,
+      "allowElevation": true,
+      "allowToChangeInstallationDirectory": true,
+      "installerIcon": "./src/assets/logo.ico",
+      "uninstallerIcon": "./src/assets/icon2.ico",
+      "installerHeaderIcon": "./src/assets/logo.ico",
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "softcall"
+    },
+    "directories": {
+      "output": "dist"
+    },
+    "copyright": "2024/1/8",
+    "productName": "softcall",
+    "win": {
+      "icon": "./src/assets/logo.ico",
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    },
+    "extraResources": [
+      {
+        "from": "./src",
+        "to": "../src"
+      }
+    ],
+    "publish": [
+      {
+        "provider": "generic",
+        "url": "http://localhost:8080/electron"
+      }
+    ]
+  },
+  "dependencies": {
+    "amqplib": "^0.10.3",
+    "express": "^4.18.2",
+    "getmac": "^6.4.0",
+    "ggbrowser-lib-log": "^1.0.4",
+    "ggbrowser-lib-mq": "^1.0.1",
+    "ggbrowser-lib-screen": "^1.0.7",
+    "ggbrowser-lib-single-application": "^1.0.2",
+    "ggbrowser-lib-tray": "^1.0.3",
+    "socket.io": "^4.7.2"
+  }
+}

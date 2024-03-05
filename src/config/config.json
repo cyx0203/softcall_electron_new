@@ -1,0 +1,312 @@
+{
+	"全局设置": {
+		"visiable": true,
+		"type": 0,
+		"subList": [
+			{
+				"name": "是否隐藏指令集Tab",
+				"type": "boolean",
+				"visiable": true,
+				"value": true,
+				"key": "NeedOrderTab",
+				"disabled": true
+			},
+			{
+				"name": "是否要关闭HTTPS证书验证",
+				"type": "boolean",
+				"visiable": true,
+				"value": true,
+				"key": "NeedIgnoreSSL",
+				"disabled": false
+			},
+			{
+				"name": "浏览器标题",
+				"type": "text",
+				"disabled": false,
+				"value": "React App",
+				"key": "Title",
+				"visiable": false
+			},
+			{
+				"name": "呼出热键",
+				"type": "text",
+				"disabled": false,
+				"value": "ctrl+1",
+				"key": "ShortcutKey"
+			},
+			{
+				"name": "是否要置顶",
+				"type": "boolean",
+				"disabled": true,
+				"value": false,
+				"key": "OnTop"
+			},
+			{
+				"name": "是否要显示窗体",
+				"type": "boolean",
+				"disabled": true,
+				"value": false,
+				"key": "ShowFrame"
+			},
+			{
+				"name": "WEB窗体背景色",
+				"type": "text",
+				"disabled": false,
+				"value": "#d3e6f8",
+				"key": "WebBgColor"
+			},
+			{
+				"name": "是否是DEBUG模式",
+				"type": "boolean",
+				"disabled": false,
+				"value": true,
+				"key": "Debug"
+			},
+			{
+				"name": "是否能调整窗口大小",
+				"type": "boolean",
+				"disabled": false,
+				"value": false,
+				"key": "ChangeWindowSize"
+			}
+		]
+	},
+	"主屏配置": {
+		"visiable": true,
+		"type": 0,
+		"subList": [
+			{
+				"name": "WEB访问地址",
+				"type": "text",
+				"visiable": true,
+				"value": "http://localhost:8080/el_call/",
+				"key": "WebUrl",
+				"tip": "只有「web 获取模式」为「远程访问」时才会生效"
+			},
+			{
+				"name": "WEB服务监听端口",
+				"type": "number",
+				"visiable": true,
+				"value": 1089,
+				"key": "WebServerPort"
+			},
+			{
+				"name": "WEB获取模式",
+				"type": "dropdown",
+				"visiable": true,
+				"value": "02",
+				"key": "WebLoadMode",
+				"disabled": false,
+				"options": [
+					{
+						"label": "本地获取",
+						"value": "01"
+					},
+					{
+						"label": "远程访问",
+						"value": "02"
+					}
+				],
+				"tip": "如果选用了'本地获取'，请务必调整下方的「webapp文件夹」；如果选用了'远程获取'，则下方的「webapp文件夹」不用理会"
+			},
+			{
+				"name": "src文件夹下的结点",
+				"type": "text",
+				"visiable": true,
+				"value": "src/html/softcall",
+				"key": "WebRoot"
+			},
+			{
+				"name": "分辨率",
+				"type": "text",
+				"visiable": true,
+				"value": "800*600",
+				"key": "Dpi"
+			},
+			{
+				"name": "NODE功能支持开关",
+				"type": "boolean",
+				"disabled": true,
+				"visiable": true,
+				"value": true,
+				"key": "NodeIntegration",
+				"tip": "如果第三方不能改JQuery配置，该配置项要设置成关闭状态"
+			},
+			{
+				"name": "是否要显示窗体",
+				"type": "boolean",
+				"disabled": true,
+				"value": false,
+				"key": "ShowFrame"
+			},
+			{
+				"name": "置顶时的等级",
+				"type": "number",
+				"visiable": true,
+				"value": 1,
+				"key": "onTopLevel",
+				"tip": "数字越大，级别越高"
+			},
+			{
+				"name": "位置偏移量",
+				"type": "text",
+				"visiable": true,
+				"value": "0|0",
+				"key": "Offset",
+				"tip": "不设置偏移默认0|0"
+			},
+			{
+				"name": "网页延迟加载",
+				"type": "number",
+				"visiable": true,
+				"value": 0.1,
+				"key": "LoadDelay",
+				"tip": "单位:秒"
+			}
+		]
+	},
+	"MQ": {
+		"visiable": true,
+		"type": 0,
+		"subList": [
+			{
+				"name": "启用MQ的产品",
+				"type": "dropdown",
+				"visiable": true,
+				"value": "softcall",
+				"key": "mod",
+				"options": [
+					{
+						"label": "softcall",
+						"value": "softcall"
+					}
+				]
+			},
+			{
+				"name": "protocol",
+				"type": "text",
+				"visiable": true,
+				"value": "amqp",
+				"key": "protocol"
+			},
+			{
+				"name": "hostname",
+				"type": "text",
+				"visiable": true,
+				"value": "127.0.0.1",
+				"key": "hostname"
+			},
+			{
+				"name": "port",
+				"type": "number",
+				"visiable": true,
+				"value": 25672,
+				"key": "port"
+			},
+			{
+				"name": "username",
+				"type": "text",
+				"visiable": true,
+				"value": "admin",
+				"key": "username"
+			},
+			{
+				"name": "password",
+				"type": "text",
+				"visiable": true,
+				"value": "86970000",
+				"key": "password"
+			},
+			{
+				"name": "vhost",
+				"type": "text",
+				"visiable": true,
+				"value": "QueueServer",
+				"key": "vhost"
+			},
+			{
+				"name": "queueName",
+				"type": "text",
+				"visiable": true,
+				"value": "0a:00:27:00:00:06",
+				"key": "queueName"
+			}
+		]
+	},
+	"softcall配置": {
+		"visiable": true,
+		"type": 1,
+		"subList": [
+			{
+				"name": "是否启用软呼叫",
+				"type": "boolean",
+				"visiable": true,
+				"value": true,
+				"key": "softcall_enable"
+			},
+			{
+				"name": "MQ 流程定制",
+				"type": "dropdown",
+				"visiable": false,
+				"value": "softcall",
+				"key": "project",
+				"options": [
+					{
+						"label": "软呼叫通用流程",
+						"value": "softcall"
+					}
+				]
+			},
+			{
+				"name": "idDev",
+				"type": "text",
+				"visiable": true,
+				"value": "0a:00:27:00:00:06",
+				"key": "idDev"
+			},
+			{
+				"name": "登陆标题",
+				"type": "text",
+				"visiable": true,
+				"value": "登  录",
+				"key": "loginTitle"
+			},
+			{
+				"name": "api",
+				"type": "text",
+				"visiable": true,
+				"value": "http://127.0.0.1:33127/",
+				"key": "apiUrl"
+			},
+			{
+				"name": "是否显示附加信息",
+				"type": "boolean",
+				"visiable": true,
+				"value": true,
+				"key": "idLink"
+			},
+			{
+				"name": "是否显示转诊",
+				"type": "boolean",
+				"visiable": true,
+				"value": true,
+				"key": "transfer"
+			},
+			{
+				"name": "设备是否已注册",
+				"type": "boolean",
+				"visiable": true,
+				"value": false,
+				"disabled": true,
+				"key": "macIsRegister"
+			},
+			{
+				"name": "设备启用窗口吸附功能",
+				"type": "boolean",
+				"visiable": true,
+				"value": true,
+				"key": "absorb_enable"
+			}
+		]
+	}
+}
